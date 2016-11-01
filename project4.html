@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Junhui's Portfolio</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link rel="shortcut icon" href="images/ico/favicon.ico">
+</head><!--/head-->
+<body>
+
+
+  <div class="project-bg5"></div>
+
+  <header id="nav" class="navbar navbar-inverse wet-asphalt midnight-blue project-nav" role="banner" style="margin:0px;">
+      <div class="container">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="index.html"><img src="images/logo copy.png" alt="logo"></a>
+          </div>
+          <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav navbar-right">
+                  <li><a href="project3.html">Last</a></li>
+                  <li><a href="project5.html">Next</a></li>
+                  <li><a href="index.html#portfolio">Close</a></li>
+              </ul>
+          </div>
+      </div>
+  </header>
+
+   <div class="section-bg">
+    <section class="container">
+      <h1 class="section-title project-title">Gym Buddy App design</h1>
+      <div class="project-header">
+      <span class="project-span"></span>
+      <h3 class="section-title">Overview</h3>
+      <span class="project-span"></span>
+    </div>
+    <div class="row project-content">
+      <div class="col-sm-12 col-md-6">
+            <p class="project-content">Gym Buddy is a mobile application to help the gym rookies to overcome gym fear </p>
+      </div>
+        <div class="col-sm-12 col-md-6">
+              <p class="project-content">This is a single project, so I do everything myself in this project, include UX research and graphic design. The project is still undergoing, so fat I have developed a paper prototype for the app, the final product would be expected to deliver in April. </p>
+        </div>
+      </div>
+   <div class="project-overview-content">
+     <div class="col-sm-4"><h6>Role:</h6><p>UX Designer&Researcher</p></div>
+     <div class="col-sm-4"><h6>When:</h6><p>Jan.2015-Current(Undergoing)</p></div>
+     <div class="col-sm-4"><h6>Skills:</h6><p>Brainstorming,Sketch,</br>Persona,WireFrame,Prototyping</p></div>
+   </div>
+   <!-- <div class="project-button">
+    <a href="https://github.com/Junhui-UMSI/Teamproject.git" target="_blank" class="button">View the Conference Paper</a>
+  </div> -->
+
+          <div class="col-sm-12 project-block">
+            <div class="project-header">
+            <span class="project-span"></span>
+            <h3 class="section-title">Sketch</h3>
+            <span class="project-span"></span>
+          </div>
+            <img class="project-image" src="images/Gym-1.png" alt="Sketch">
+          </div>
+
+          <div class="col-sm-12 project-block">
+            <div class="project-header">
+            <span class="project-span"></span>
+            <h3 class="section-title">Persona</h3>
+            <span class="project-span"></span>
+          </div>
+              <img class="project-image" src="images/persona.png" alt="Persona">
+          </div>
+
+    </section>
+  </div>
+
+
+  <footer id="footer" class="midnight-blue">
+      <div class="container">
+          <div class="row">
+              <div class="col-sm-6">
+                  &copy; 2016 <a target="_blank" href="http://www.junhui-li.com" title="Junhui Li">Junhui Li</a>. All Rights Reserved.
+              </div>
+              <div class="col-sm-6">
+                  <ul class="pull-right">
+                      <li><a href="project3.html">Last</a></li>
+                      <li><a href="project5.html">Next</a></li>
+                      <li><a href="index.html#portfolio">Close</a></li>
+                      <li><a id="gototop" class="gototop" href="#"><i class="icon-chevron-up"></i></a></li><!--#gototop-->
+                  </ul>
+              </div>
+          </div>
+      </div>
+  </footer>
+
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.prettyPhoto.js"></script>
+    <script src="js/jquery.isotope.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+    $(document).ready(function () {
+        // Check the initial Poistion of the Sticky Header
+
+        $(window).scroll(function () {
+      console.log($(window).scrollTop());
+      // console.log($(window).height());
+            if ($(window).scrollTop() > 500) {
+                $('#nav').css({
+                    display:'inline-block',
+                    position: 'fixed',
+                    top: '0',
+                    width: '100%'
+                });
+            } else {
+                $('#nav').css({
+                    display: 'none',
+                    position: 'static'
+                });
+
+
+            }
+        });
+    });
+    </script>
+</body>
+</html>
