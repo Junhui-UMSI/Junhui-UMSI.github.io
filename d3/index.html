@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='bootstrap.min.css' rel='stylesheet'>
+    <link rel='stylesheet' type='text/css' href='styles.css'>
+    <title>Heap Visualizer</title>
+  </head>
+
+  <body>
+    <div class="definition">
+      <h1>SI 649 Junhui's assignment: Heap Visualization</h1>
+      <h2>Heap Defintion</h2>
+      <p style="font-size: 20px;">In computer science, a heap is a specialized tree-based data structure that satisfies the heap property: If A is a parent node of B then the key (the value) of node A is ordered with respect to the key of node B with the same ordering applying across the heap. A heap can be classified further as either a "max heap" or a "min heap". In a max heap, the keys of parent nodes are always greater than or equal to those of the children and the highest key is in the root node. In a min heap, the keys of parent nodes are less than or equal to those of the children and the lowest key is in the root node.
+The heap is one maximally efficient implementation of an abstract data type called a priority queue, and in fact priority queues are often referred to as "heaps", regardless of how they may be implemented. A common implementation of a heap is the binary heap, in which the tree is a complete binary tree (see figure). The heap data structure, specifically the binary heap, was introduced by J. W. J. Williams in 1964, as a data structure for the heapsort sorting algorithm.[1] Heaps are also crucial in several efficient graph algorithms such as Dijkstra's algorithm.
+In a heap, the highest (or lowest) priority element is always stored at the root. A heap is not a sorted structure and can be regarded as partially ordered. As visible from the heap-diagram, there is no particular relationship among nodes on any given level, even among the siblings. When a heap is a complete binary tree, it has a smallest possible height—a heap with N nodes always has log N height. A heap is a useful data structure when you need to remove the object with the highest (or lowest) priority.
+Note that, as shown in the graphic, there is no implied ordering between siblings or cousins and no implied sequence for an in-order traversal (as there would be in, e.g., a binary search tree). The heap relation mentioned above applies only between nodes and their parents, grandparents, etc. The maximum number of children each node can have depends on the type of heap, but in many types it is at most two, which is known as a binary heap.
+A heap data structure should not be confused with the heap which is a common name for the pool of memory from which dynamically allocated memory is allocated. The term was originally used only for the data structure.</p>
+      </br><p style="font-size: 20px;">The good Point of Heap in one sentence: Since the element in heap is ordered by value in the sequence of parent-child nodes, it is often used in sorting and searching for the maximum or minimum value.</p>
+      <div class="definition1 col-xs-6">
+        <h2>Max Heap</h2>
+        <p style="font-size: 20px;">By definition, the value of parent nodes should be larger or equal to its children nodes in the max heap.</p>
+      </div>
+      <div class="definition2 col-xs-6">
+        <h2>Min Heap</h2>
+        <p style="font-size: 20px;">By definition, the value of parent nodes should be smaller or equal to its children nodes in the min heap.</p>
+      </div>
+    </div>
+
+    <div class="controller">
+
+      <div class="options col-xs-4">
+        <h2>Controller Panel</h2>
+        <form name="numberinput" onsubmit='heap.insert(); return false;'>
+          <input id='inputVal' type='text' placeHolder='number'/>
+          <input type='submit' value='Insert'>
+        </form>
+        <br/>
+        <form onsubmit='setDelay(); return false;'>
+          <input id='delayTime' type='text' placeHolder='milliseconds'/>
+          <input type='submit' value='Set Delay Time'>
+        </form>
+        <br/>
+        <button onclick="stop()">Stop</button>
+        <button onclick="resume()">Resume</button>
+        <button id='remove' onclick='heap.removeMax()'>Remove Max</button>
+        <p>Some Color encoding Hint:
+          The inserted element will first go down to the very lower level, and then compare its value with its parent node to see if there is a need for a switch.
+          If the element is indeed larger than its parent, it will swap the position of the element and its parent, the node will be encoded green in order to tell user this element is successfully changing the position because its value is bigger.
+          </p>
+      </div>
+      <div class="main col-xs-8">
+        <h2>How to construct the heap</h2>
+
+      </div>
+
+    </div>
+    <script src='d3.min.js'></script>
+
+    <script>
+      function stop(){
+        var stopevent = d3.select(".main");
+        stopevent.selectAll("circle").transition()
+                 .duration(0);
+        stopevent.selectAll(".link").transition()
+                .duration(0);
+        stopevent.selectAll("text").transition()
+                 .duration(0);
+      }
+
+      function resume(){
+        animateSwap();
+      }
+
+      var MaxtreeData = [
+          {
+            "name": "A",
+            "parent": "null",
+            "value": 5,
+            "type": "black",
+            "level": "red",
+            "children": [
+              {
+                "name": "B",
+                "parent": "Top Level",
+                "value": 4,
+                "type": "grey",
+                "level": "red",
+                "children": [
+                  {
+                    "name": "D",
+                    "parent": "Level 2: A",
+                    "value": 1,
+                    "type": "steelblue",
+                    "level": "orange"
+                  },
+                  {
+                    "name": "E",
+                    "parent": "Level 2: A",
+                    "value": 2,
+                    "type": "steelblue",
+                    "level": "red"
+                  }
+                ]
+              },
+              {
+                "name": "C",
+                "parent": "Top Level",
+                "value": 3,
+                "type": "grey",
+                "level": "green"
+              }
+            ]
+          }
+        ];
+      var MintreeData = [
+          {
+            "name": "A",
+            "parent": "null",
+            "value": 1,
+            "type": "black",
+            "level": "red",
+            "children": [
+              {
+                "name": "B",
+                "parent": "Top Level",
+                "value": 3,
+                "type": "grey",
+                "level": "red",
+                "children": [
+                  {
+                    "name": "D",
+                    "parent": "Level 2: A",
+                    "value": 5,
+                    "type": "steelblue",
+                    "level": "orange"
+                  },
+                  {
+                    "name": "E",
+                    "parent": "Level 2: A",
+                    "value": 4,
+                    "type": "steelblue",
+                    "level": "red"
+                  }
+                ]
+              },
+              {
+                "name": "C",
+                "parent": "Top Level",
+                "value": 2,
+                "type": "grey",
+                "level": "green"
+              }
+            ]
+          }
+        ];
+      var margin = {top: 120, right: 120, bottom: 20, left: 120},
+        	width = 700 - margin.right - margin.left,
+        	height = 500 - margin.top - margin.bottom;
+
+      var i = 0;
+
+      var tree = d3.layout.tree()
+      	.size([height, width]);
+
+      var diagonal = d3.svg.diagonal()
+      	.projection(function(d) { return [d.x, d.y]; });
+
+      var svg1 = d3.select(".definition1").append("svg")
+      	.attr("width", width + margin.right + margin.left)
+      	.attr("height", height + margin.top + margin.bottom)
+        .attr("id","maxheap")
+        .append("g")
+      	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      var svg2 = d3.select(".definition2").append("svg")
+        .attr("width", width + margin.right + margin.left)
+        .attr("height", height + margin.top + margin.bottom)
+        .attr("id","maxheap")
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+      updateMaxheap(MaxtreeData[0]);
+      updateMinheap(MintreeData[0]);
+
+      function updateMaxheap(source) {
+
+        var nodes = tree.nodes(source),
+      	  links = tree.links(nodes);
+
+        nodes.forEach(function(d) { d.y = d.depth * 100; });
+
+        var node = svg1.selectAll("g.node")
+      	  .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+        var nodeEnter = node.enter().append("g")
+         .attr("class", "node")
+         .attr("transform", function(d) {
+          return "translate(" + d.x + "," + d.y + ")"; });
+
+        nodeEnter.append("circle")
+      	  .attr("r", function(d){ return d.value*10})
+      	  .style("stroke", "black")
+      	  .style("fill", "white");
+
+        nodeEnter.append("text")
+      	  .attr("y", function(d) {
+      		  return d.children || d.children; })
+      	  .attr("dy", ".35em")
+      	  .attr("text-anchor", "middle")
+      	  .text(function(d) { return d.name; })
+      	  .style("fill-opacity", 1)
+          .style("font-size","20px");
+
+        var link = svg1.selectAll("path.link")
+      	  .data(links, function(d) { return d.target.id; });
+
+        link.enter().insert("path", "g")
+      	  .attr("class", "link")
+        	  .style("stroke", "black")
+      	  .attr("d", diagonal);
+
+      }
+
+      function updateMinheap(source) {
+
+        var nodes = tree.nodes(source),
+      	  links = tree.links(nodes);
+
+        nodes.forEach(function(d) { d.y = d.depth * 100; });
+
+        var node = svg2.selectAll("g.node")
+      	  .data(nodes, function(d) { return d.id || (d.id = ++i); });
+
+        var nodeEnter = node.enter().append("g")
+         .attr("class", "node")
+         .attr("transform", function(d) {
+          return "translate(" + d.x + "," + d.y + ")"; });
+
+        nodeEnter.append("circle")
+      	  .attr("r", function(d){return d.value*10})
+      	  .style("stroke", "black")
+      	  .style("fill", "while");
+
+        nodeEnter.append("text")
+      	  .attr("y", function(d) {
+      		  return d.children || d.children; })
+      	  .attr("dy", ".35em")
+      	  .attr("text-anchor", "middle")
+      	  .text(function(d) { return d.name; })
+      	  .style("fill-opacity", 1)
+          .style("font-size","20px");
+
+        var link = svg2.selectAll("path.link")
+      	  .data(links, function(d) { return d.target.id; });
+
+        link.enter().insert("path", "g")
+      	  .attr("class", "link")
+        	  .style("stroke", "black")
+      	  .attr("d", diagonal);
+
+      }
+
+    </script>
+    <script src='heap.js'></script>
+    <script src='visualize.js'></script>
+  </body>
+</html>
