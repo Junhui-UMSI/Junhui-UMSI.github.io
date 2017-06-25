@@ -1194,6 +1194,7 @@ background: url(../images/background.png)  no-repeat center center fixed;*/
 background-size: cover;
 background-color: #FDFDFD;
 padding-top: 15px;
+padding-bottom: 25px;
 }
 .section-title{
   text-align: center;
